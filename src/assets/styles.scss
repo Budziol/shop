@@ -1,0 +1,47 @@
+@font-face {
+  font-family: "Lato";
+  src: local("Lato"), url(../fonts/Lato-Regular.ttf) format("truetype");
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: "Lato";
+  src: local("Lato"), url(../fonts/Lato-Medium.ttf) format("truetype");
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "Lato";
+  src: local("Lato"), url(../fonts/Lato-Bold.ttf) format("truetype");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Lato";
+  src: local("Lato"), url(../fonts/Lato-Black.ttf) format("truetype");
+  font-weight: 400;
+}
+
+$main-font-clr: #000;
+$secondary-font-clr: #a1a1a1;
+$active-font-color: #6342e8;
+
+$delBtn-clr: #e1462e;
+
+@mixin line {
+  display: block;
+  height: 3rem;
+  background-color: $active-font-color;
+  width: 60px;
+}
+
+@mixin btn {
+  width: 150px;
+  font-family: "Lato";
+  font-size: 16rem;
+  font-weight: 200;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 5rem;
+}

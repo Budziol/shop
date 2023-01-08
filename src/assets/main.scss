@@ -1,0 +1,20 @@
+@import "./styles.scss";
+
+*,
+::before,
+::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 1px;
+}
+
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+#app {
+  font-family: "Lato";
+  font-weight: 200;
+}
