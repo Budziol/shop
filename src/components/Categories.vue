@@ -1,8 +1,4 @@
 <script setup>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import "swiper/css";
-import { watch } from "vue";
-
 const props = defineProps({
   categories: Array,
   activeCategory: String,
