@@ -74,6 +74,7 @@ const addToFavourites = (product) => {
       font-size: 16rem;
       font-weight: 400;
       color: $main-font-clr;
+      min-height: 40px;
     }
     .cardPrice {
       font-size: 18rem;

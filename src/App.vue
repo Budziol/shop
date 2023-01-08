@@ -41,6 +41,7 @@ onMounted(() => {
 watch([activeCategory], () => {
   fetchData();
   loading.value = true;
+  open.value = false;
 });
 </script>
 

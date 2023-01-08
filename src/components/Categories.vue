@@ -29,5 +29,9 @@ const emits = defineEmits(["category-name"]);
   font-size: 18px;
   color: $secondary-font-clr;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    padding: 10rem;
+  }
 }
 </style>
