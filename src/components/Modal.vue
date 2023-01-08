@@ -2,7 +2,6 @@
 import Close from "../icons/NavIcons/Close.vue";
 import Categories from "./Categories.vue";
 import Favourites from "./Favourites.vue";
-import { ref, watch, onMounted, onBeforeUnmount } from "vue";
 
 const props = defineProps({
   modalComponent: String,
@@ -15,27 +14,12 @@ const emits = defineEmits(["open", "clicked-category"]);
 const categoryClicked = (val) => {
   emits("clicked-category", val);
 };
-
-const modal_ref = ref();
-
-const essa = (e) => {
-  if (e.target.contains(modal_ref.value)) {
-    emits("open");
-  }
-};
-
-onMounted(() => {
-  window.addEventListener("click", essa);
-});
-onBeforeUnmount(() => {
-  window.removeEventListener("click", essa);
-});
 </script>
 
 <template>
   <div class="modal">
-    <div class="overlay">
-      <div ref="modal_ref" class="modalContent">
+    <div class="overlay" @click="$emit('open')">
+      <div class="modalContent" @click.stop="">
         <div class="headingOuterWrapper">
           <div class="headingWrapper">
             <h2 class="heading">

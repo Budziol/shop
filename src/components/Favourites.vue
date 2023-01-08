@@ -1,7 +1,8 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 let likedProducts = ref();
+const isEmpty = ref(true);
 
 onMounted(() => {
   likedProducts.value = JSON.parse(localStorage.getItem("favourites"));
@@ -13,10 +14,20 @@ const deleteLikedProduct = (val) => {
   );
   localStorage.setItem("favourites", JSON.stringify(likedProducts.value));
 };
+
+watch(likedProducts, () => {
+  if (likedProducts.value.length === 0) {
+    isEmpty.value = true;
+  } else {
+    isEmpty.value = false;
+  }
+});
 </script>
 
 <template>
+  <h2 v-if="isEmpty" class="infoHeading">Empty</h2>
   <div
+    v-else="isEmpty"
     class="likedCard"
     v-for="likedProduct in likedProducts"
     :key="likedProduct.id"
@@ -40,6 +51,10 @@ const deleteLikedProduct = (val) => {
 
 <style lang="scss">
 @import "../assets/styles.scss";
+.infoHeading {
+  font-size: 22rem;
+  font-weight: 200;
+}
 .likedCard {
   width: 100%;
   display: flex;
