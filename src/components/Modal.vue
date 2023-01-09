@@ -75,7 +75,7 @@ const categoryClicked = (val) => {
       @media (max-width: 768px) {
         width: auto;
         border: none;
-        border-radius: none;
+        border-radius: 0;
       }
       .headingOuterWrapper {
         display: flex;
