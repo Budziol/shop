@@ -3,7 +3,7 @@ import Home from "./components/Home.vue";
 import Navbar from "./components/Navbar.vue";
 import Modal from "./components/Modal.vue";
 import Loader from "./components/Loader.vue";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, onBeforeMount } from "vue";
 import axios from "axios";
 
 const products = ref(null);
@@ -43,6 +43,28 @@ watch([activeCategory], () => {
   loading.value = true;
   open.value = false;
 });
+
+const favourites = ref();
+
+onBeforeMount(() => {
+  favourites.value = JSON.parse(localStorage.getItem("favourites"));
+});
+
+const handleFavourites = (product) => {
+  favourites.value = JSON.parse(localStorage.getItem("favourites"));
+  if (favourites.value) {
+    if (favourites.value.find((item) => item.id === product.id) !== undefined) {
+      favourites.value = favourites.value.filter(
+        (item) => item.id !== product.id
+      );
+    } else {
+      favourites.value = [...favourites.value, product];
+    }
+  } else {
+    favourites.value = [product];
+  }
+  localStorage.setItem("favourites", JSON.stringify(favourites.value));
+};
 </script>
 
 <template>
@@ -54,11 +76,18 @@ watch([activeCategory], () => {
       :categories="categories"
       :activeCategory="activeCategory"
       @clicked-category="(val) => (activeCategory = val)"
+      :favourites="favourites"
+      @delete-liked-product="(val) => handleFavourites(val)"
     />
   </div>
   <div v-if="loading"><Loader /></div>
   <div class="home" v-else>
-    <router-view :products="products" :activeCategory="activeCategory" />
+    <router-view
+      :products="products"
+      :activeCategory="activeCategory"
+      :favourites="favourites"
+      @like-click="(val) => handleFavourites(val)"
+    />
   </div>
 </template>
 

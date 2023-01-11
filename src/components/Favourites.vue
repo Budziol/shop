@@ -1,35 +1,21 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
-
-let likedProducts = ref();
-const isEmpty = ref(true);
-
-onMounted(() => {
-  likedProducts.value = JSON.parse(localStorage.getItem("favourites"));
+const props = defineProps({
+  favourites: Array,
 });
+
+const emits = defineEmits(["delete-liked-product"]);
 
 const deleteLikedProduct = (val) => {
-  likedProducts.value = likedProducts.value.filter(
-    (product) => product.id !== val.id
-  );
-  localStorage.setItem("favourites", JSON.stringify(likedProducts.value));
+  emits("delete-liked-product", val);
 };
-
-watch(likedProducts, () => {
-  if (likedProducts.value.length === 0) {
-    isEmpty.value = true;
-  } else {
-    isEmpty.value = false;
-  }
-});
 </script>
 
 <template>
-  <h2 v-if="isEmpty" class="infoHeading">Empty</h2>
+  <h2 v-if="props.favourites.length === 0" class="infoHeading">Empty</h2>
   <div
-    v-else="isEmpty"
+    v-else
     class="likedCard"
-    v-for="likedProduct in likedProducts"
+    v-for="likedProduct in favourites"
     :key="likedProduct.id"
   >
     <div class="cardWrapper">

@@ -7,12 +7,17 @@ const props = defineProps({
   modalComponent: String,
   categories: Array,
   activeCategory: String,
+  favourites: Array,
 });
 
-const emits = defineEmits(["open", "clicked-category"]);
+const emits = defineEmits(["open", "clicked-category", "delete-liked-product"]);
 
 const categoryClicked = (val) => {
   emits("clicked-category", val);
+};
+
+const deleteProduct = (val) => {
+  emits("delete-liked-product", val);
 };
 </script>
 
@@ -40,7 +45,11 @@ const categoryClicked = (val) => {
             :activeCategory="activeCategory"
             @category-name="categoryClicked"
           />
-          <Favourites v-if="modalComponent === 'favourites'" />
+          <Favourites
+            v-if="modalComponent === 'favourites'"
+            :favourites="props.favourites"
+            @delete-liked-product="(val) => deleteProduct(val)"
+          />
         </div>
       </div>
     </div>
