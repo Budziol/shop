@@ -65,7 +65,7 @@ const categoryClicked = (val) => {
     width: 100vw;
     .modalContent {
       padding: 20rem;
-      background-color: #fff;
+      background-color: $bg-secondary-color;
       width: fit-content;
       min-height: 100vh;
       margin-left: auto;

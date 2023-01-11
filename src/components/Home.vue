@@ -1,10 +1,20 @@
+<script>
+// use normal <script> to declare options
+export default {
+  inheritAttrs: false,
+};
+</script>
+
 <script setup>
 import Favourite from "../icons/NavIcons/Favourite.vue";
+import Basket from "../icons/NavIcons/Basket.vue";
 
 const props = defineProps({
   products: Object,
   activeCategory: String,
 });
+
+const emits = defineEmits(["basket-product"]);
 
 const addToFavourites = (product) => {
   let existing = JSON.parse(localStorage.getItem("favourites"));
@@ -18,6 +28,20 @@ const addToFavourites = (product) => {
     existing = [product];
   }
   localStorage.setItem("favourites", JSON.stringify(existing));
+};
+
+const addToBasket = (product) => {
+  let existing = JSON.parse(localStorage.getItem("basket"));
+  if (existing) {
+    if (existing.find((item) => item.id === product.id) !== undefined) {
+      return;
+    } else {
+      existing = [...existing, product];
+    }
+  } else {
+    existing = [product];
+  }
+  localStorage.setItem("basket", JSON.stringify(existing));
 };
 </script>
 
@@ -38,6 +62,9 @@ const addToFavourites = (product) => {
       <span class="icon" @click="addToFavourites(product)">
         <Favourite />
       </span>
+      <span class="icon" @click="addToBasket(product)">
+        <Basket />
+      </span>
     </div>
   </div>
 </template>
@@ -49,9 +76,7 @@ const addToFavourites = (product) => {
   flex-direction: column;
   column-gap: 5rem;
   .category {
-    font-size: 18rem;
-    padding: 10rem 0;
-    color: $active-font-color;
+    @include heading;
   }
   .line {
     @include line;

@@ -8,14 +8,16 @@ import Menu from "../icons/NavIcons/Menu.vue";
 
 <template>
   <nav class="navbar">
-    <h1 class="logo">Shop.</h1>
+    <router-link to="/">
+      <h1 class="logo">Shop.</h1>
+    </router-link>
     <ul class="container">
       <li class="icon">
         <Notification />
       </li>
-      <li class="icon">
+      <router-link class="icon" to="/basket">
         <Basket />
-      </li>
+      </router-link>
       <li class="icon" @click="$emit('icon-click', 'favourites')">
         <Favourite />
       </li>
@@ -39,8 +41,11 @@ import Menu from "../icons/NavIcons/Menu.vue";
   padding: 0 10rem;
   display: flex;
   align-items: center;
-
-  background-color: #fff;
+  background-color: $bg-color;
+  a {
+    color: unset;
+    text-decoration: none;
+  }
   .logo {
     font-size: 24rem;
     font-weight: 400;
@@ -53,6 +58,7 @@ import Menu from "../icons/NavIcons/Menu.vue";
 
     .icon {
       margin: 10rem;
+      cursor: pointer;
     }
   }
 }

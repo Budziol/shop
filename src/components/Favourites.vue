@@ -52,8 +52,7 @@ watch(likedProducts, () => {
 <style lang="scss">
 @import "../assets/styles.scss";
 .infoHeading {
-  font-size: 22rem;
-  font-weight: 200;
+  @include infoHeading;
 }
 .likedCard {
   width: 100%;

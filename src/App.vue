@@ -58,7 +58,7 @@ watch([activeCategory], () => {
   </div>
   <div v-if="loading"><Loader /></div>
   <div class="home" v-else>
-    <Home :products="products" :activeCategory="activeCategory" />
+    <router-view :products="products" :activeCategory="activeCategory" />
   </div>
 </template>
 

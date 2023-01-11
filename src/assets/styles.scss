@@ -22,11 +22,29 @@
   font-weight: 400;
 }
 
+$bg-color: rgb(250, 249, 248);
+$bg-secondary-color: #fff;
 $main-font-clr: #000;
 $secondary-font-clr: #a1a1a1;
 $active-font-color: #6342e8;
 
 $delBtn-clr: #e1462e;
+
+@mixin heading {
+  font-size: 18rem;
+  padding: 10rem 0;
+  color: $active-font-color;
+}
+
+@mixin infoHeading {
+  font-size: 22rem;
+  font-weight: 200;
+}
+
+@mixin paragraph {
+  font-size: 13rem;
+  font-weight: 100;
+}
 
 @mixin line {
   display: block;
@@ -44,4 +62,12 @@ $delBtn-clr: #e1462e;
   border: none;
   border-radius: 5px;
   padding: 5rem;
+  cursor: pointer;
+}
+
+@mixin loginBtn {
+  @include btn;
+  width: 200px;
+  border: 1px solid #000;
+  background-color: transparent;
 }
