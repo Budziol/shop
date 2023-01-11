@@ -45,9 +45,11 @@ watch([activeCategory], () => {
 });
 
 const favourites = ref();
+const basket = ref();
 
 onBeforeMount(() => {
   favourites.value = JSON.parse(localStorage.getItem("favourites"));
+  basket.value = JSON.parse(localStorage.getItem("basket"));
 });
 
 const handleFavourites = (product) => {
@@ -64,6 +66,20 @@ const handleFavourites = (product) => {
     favourites.value = [product];
   }
   localStorage.setItem("favourites", JSON.stringify(favourites.value));
+};
+
+const handleBasket = (product) => {
+  basket.value = JSON.parse(localStorage.getItem("basket"));
+  if (basket.value) {
+    if (basket.value.find((item) => item.id === product.id) !== undefined) {
+      basket.value = basket.value.filter((item) => item.id !== product.id);
+    } else {
+      basket.value = [...basket.value, product];
+    }
+  } else {
+    basket.value = [product];
+  }
+  localStorage.setItem("basket", JSON.stringify(basket.value));
 };
 </script>
 
@@ -87,6 +103,9 @@ const handleFavourites = (product) => {
       :activeCategory="activeCategory"
       :favourites="favourites"
       @like-click="(val) => handleFavourites(val)"
+      :basket="basket"
+      @basket-click="(val) => handleBasket(val)"
+      @delete-basket-product="(val) => handleBasket(val)"
     />
   </div>
 </template>

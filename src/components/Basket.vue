@@ -6,35 +6,26 @@ export default {
 </script>
 
 <script setup>
-import { ref, watch, onBeforeMount, onUpdated } from "vue";
+import { ref, onUpdated, watch, onMounted } from "vue";
 import router from "@/router";
 import Trash from "../icons/Trash.vue";
-import Loader from "./Loader.vue";
 
-const basket = ref();
+const props = defineProps({
+  basket: Array,
+});
+
+const emits = defineEmits(["delete-basket-product"]);
+
 const sum = ref(0);
-const isEmpty = ref(true);
 
 const deleteProduct = (val) => {
-  basket.value = basket.value.filter((product) => product.id !== val.id);
-  localStorage.setItem("basket", JSON.stringify(basket.value));
+  emits("delete-basket-product", val);
+  sum.value -= val.price;
 };
 
-onBeforeMount(() => {
-  basket.value = JSON.parse(localStorage.getItem("basket"));
-});
-
-watch(basket, () => {
-  if (basket.value.length === 0) {
-    isEmpty.value = true;
-  } else {
-    isEmpty.value = false;
-  }
-});
-
-onUpdated(() => {
-  if (basket.value.length > 0) {
-    sum.value = basket.value.reduce((x, y) => {
+onMounted(() => {
+  if (props.basket.length > 0) {
+    sum.value = props.basket.reduce((x, y) => {
       return x + y.price;
     }, 0);
   } else {
@@ -51,7 +42,7 @@ const changeRoute = () => {
   <section id="basketWrapper">
     <h2 class="heading">Basket</h2>
     <div class="basket">
-      <div v-if="!isEmpty" class="cardsWrapper">
+      <div v-if="props.basket.length !== 0" class="cardsWrapper">
         <div class="card" v-for="product in basket" :key="product.id">
           <img class="cardThumbnail" :src="product.thumbnail" alt="item" />
           <p class="cardTitle">{{ product.title }}</p>
@@ -77,13 +68,13 @@ const changeRoute = () => {
         <div class="continue">
           <button
             class="continueBtn"
-            :disabled="isEmpty"
-            :class="isEmpty ? 'disabled' : ''"
+            :disabled="props.basket.length === 0"
+            :class="props.basket.length === 0 ? 'disabled' : ''"
           >
             Continue without account
           </button>
         </div>
-        <div v-if="!isEmpty" class="summary">
+        <div v-if="props.basket.length !== 0" class="summary">
           <h2 class="total">Total</h2>
           <p class="summaryText">${{ sum }}</p>
         </div>

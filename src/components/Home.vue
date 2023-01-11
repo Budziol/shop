@@ -12,26 +12,17 @@ const props = defineProps({
   products: Object,
   activeCategory: String,
   favourites: Array,
+  bakset: Array,
 });
 
-const emits = defineEmits(["like-click"]);
+const emits = defineEmits(["like-click", "basket-click"]);
 
 const likeProduct = (val) => {
   emits("like-click", val);
 };
 
-const addToBasket = (product) => {
-  let existing = JSON.parse(localStorage.getItem("basket"));
-  if (existing) {
-    if (existing.find((item) => item.id === product.id) !== undefined) {
-      return;
-    } else {
-      existing = [...existing, product];
-    }
-  } else {
-    existing = [product];
-  }
-  localStorage.setItem("basket", JSON.stringify(existing));
+const basketClick = (val) => {
+  emits("basket-click", val);
 };
 </script>
 
@@ -60,7 +51,7 @@ const addToBasket = (product) => {
           <path
             class="background"
             :class="
-              favourites.find((item) => item.id === product.id) ? 'filled' : ''
+              favourites?.find((item) => item.id === product.id) ? 'filled' : ''
             "
             d="M6 3L11.5 4.5L16.5 3L20.5 4.5L22 9.5L20.5 14L12 21L7.5 18L5 15.5L3 13L2 10L2.5 6L6 3Z"
             fill="background"
@@ -68,7 +59,7 @@ const addToBasket = (product) => {
           <path
             class="stroke"
             :class="
-              favourites.find((item) => item.id === product.id) ? 'filled' : ''
+              favourites?.find((item) => item.id === product.id) ? 'filled' : ''
             "
             fill-rule="evenodd"
             clip-rule="evenodd"
@@ -77,7 +68,7 @@ const addToBasket = (product) => {
           />
         </svg>
       </span>
-      <span class="icon" @click="addToBasket(product)">
+      <span class="icon" @click="basketClick(product)">
         <Basket />
       </span>
     </div>
@@ -121,15 +112,18 @@ const addToBasket = (product) => {
       font-weight: 400;
       color: $secondary-font-clr;
     }
-    .icon:hover {
-      svg {
-        .background {
-          transition: all 0.5s ease-in-out;
-          fill: #6342e8;
-        }
-        .stroke {
-          transition: all 0.5s ease-in-out;
-          fill: #6342e8;
+    .icon {
+      cursor: pointer;
+      &:hover {
+        svg {
+          .background {
+            transition: all 0.5s ease-in-out;
+            fill: #6342e8;
+          }
+          .stroke {
+            transition: all 0.5s ease-in-out;
+            fill: #6342e8;
+          }
         }
       }
     }

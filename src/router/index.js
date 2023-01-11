@@ -6,12 +6,10 @@ const routes = [
   {
     path: "/",
     component: Home,
-    props: { products: Object, activeCategory: String },
   },
   {
     path: "/basket",
     component: Basket,
-    props: { basket: Array },
   },
   // {
   //     path: '/:pathmatch(.*)*',
